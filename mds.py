@@ -26,7 +26,7 @@ SET_MD_EXIFTOOL_CMD = """exiftool -overwrite_original \\
         -GPSLatitude=\"{}\" -GPSLatitudeRef=\"{}\" -GPSLongitude=\"{}\" -GPSLongitudeRef=\"{}\" \\
         {}*.{}"""
 
-DEL_MD_EXIFTOOL_CMD = ""
+DEL_MD_EXIFTOOL_CMD = "exiftool -overwrite_original -all= {}*.{}"
 
 
 # ------------------ Logical ------------------
@@ -76,7 +76,6 @@ def rename(path, ext, idx, pfx):
     
 # Implements set metadata options
 def metadata(jsonfile, albumid, ext):
-
     if os.path.exists(jsonfile) == False:
         print("The {} file does not exist!".format(jsonfile))
         sys.exit()
@@ -126,6 +125,26 @@ def set_metadata_album(path, album, ext):
     os.system(cmd)
     print("    For the album: '{}'".format(album["name"]))
 
+# Implements delete metadata
+def delete(path, ext):
+    if verbose:
+        print("    PATH: {}".format(path))
+        print("    EXTENSION: {}".format(ext))
+
+    if os.path.exists(path) == False:
+        print("The {} file does not exist!".format(jsonfile))
+        sys.exit()
+
+    if ext is None:
+        ext = extension
+    else:
+        ext = ext.replace("*","")
+        ext = ext.replace(".","")
+    
+    path = os.path.abspath(path) + "/"
+    cmd = DEL_MD_EXIFTOOL_CMD.format(path, ext)
+    os.system(cmd)
+    print("    For path: '{}'".format(path))
 
 # ------------------ Menu ------------------
 if __name__ == "__main__":
@@ -139,7 +158,7 @@ if __name__ == "__main__":
     parser.add_argument("--pfx", help="Prefix to rename. Default: none", metavar="PREFIX")
 
     parser.add_argument("-m", help="Set metada, Album ID, from info file", metavar=("JSON FILE", "ALBUM ID"), nargs=2)   
-
+    parser.add_argument("-d", help="Delete all metada", metavar=("PATH"))
     
     parser.add_argument("--ext", help="Extension of the files to be processed. Default: jpg", metavar="EXTENSION")
 
@@ -170,4 +189,9 @@ if __name__ == "__main__":
     # metadata
     if args.m:
         metadata(args.m[0], args.m[1], args.ext)
+        sys.exit()
+
+    # delete
+    if args.d:
+        delete(args.d, args.ext)
         sys.exit()
