@@ -26,8 +26,13 @@ SET_MD_EXIFTOOL_CMD = """exiftool -overwrite_original \\
         -GPSLatitude=\"{}\" -GPSLatitudeRef=\"{}\" -GPSLongitude=\"{}\" -GPSLongitudeRef=\"{}\" \\
         {}*.{}"""
 
-DEL_MD_EXIFTOOL_CMD = "exiftool -overwrite_original -all= {}*.{}"
+SET_COV_MD_EXIFTOOL_CMD = """exiftool -overwrite_original \\
+        -title=\"{}\" -description=\"{}\" \\
+        -AllDates=\"{}:01:01\" -FileModifyDate=\"{}:01:01 00:00:00\" \\
+        {}"""
 
+DEL_MD_EXIFTOOL_CMD = "exiftool -overwrite_original -all= {}*.{}"
+DEL_COV_MD_EXIFTOOL_CMD = "exiftool -overwrite_original -all= {}"
 
 # ------------------ Logical ------------------
 
@@ -125,6 +130,29 @@ def set_metadata_album(path, album, ext):
     os.system(cmd)
     print("    For the album: '{}'".format(album["name"]))
 
+# Implements cover metadata
+def cover(path):
+    if verbose:
+        print("    PATH: {}".format(path))
+
+    if os.path.exists(path) == False:
+        print("The {} file does not exist!".format(path))
+        sys.exit()
+
+    path = os.path.abspath(path)
+    
+    # delete all
+    cmd = DEL_COV_MD_EXIFTOOL_CMD.format(path)
+    os.system(cmd)
+    print("    For cover: '{}'".format(path))
+
+    # set data
+    filename, file_extension = os.path.splitext(os.path.basename(path))
+
+    cmd = SET_COV_MD_EXIFTOOL_CMD.format(filename, filename, filename, filename, path)
+    os.system(cmd)
+    print("    For cover: '{}'".format(path))
+
 # Implements delete metadata
 def delete(path, ext):
     if verbose:
@@ -162,7 +190,7 @@ if __name__ == "__main__":
     
     parser.add_argument("--ext", help="Extension of the files to be processed. Default: jpg", metavar="EXTENSION")
 
-
+    parser.add_argument("--cover", help="Set metadata to Cover.jpg file", metavar=("COVER"))
     
 
     args = parser.parse_args()
@@ -189,6 +217,11 @@ if __name__ == "__main__":
     # metadata
     if args.m:
         metadata(args.m[0], args.m[1], args.ext)
+        sys.exit()
+
+    # cover
+    if args.cover:
+        cover(args.cover)
         sys.exit()
 
     # delete
