@@ -147,7 +147,7 @@ def cover(path):
     print("    For cover: '{}'".format(path))
 
     # set data
-    filename, file_extension = os.path.splitext(os.path.basename(path))
+    filename = os.path.splitext(os.path.basename(path))
 
     cmd = SET_COV_MD_EXIFTOOL_CMD.format(filename, filename, filename, filename, path)
     os.system(cmd)
@@ -160,7 +160,7 @@ def delete(path, ext):
         print("    EXTENSION: {}".format(ext))
 
     if os.path.exists(path) == False:
-        print("The {} file does not exist!".format(jsonfile))
+        print("The {} file does not exist!".format(path))
         sys.exit()
 
     if ext is None:
