@@ -80,7 +80,7 @@ def rename(path, ext, idx, pfx):
     print("Renamed {} files!".format(total_renamed))
     
 # Implements set metadata options
-def metadata(jsonfile, albumid, ext):
+def metadata(jsonfile, thealbum, ext):
     if os.path.exists(jsonfile) == False:
         print("The {} file does not exist!".format(jsonfile))
         sys.exit()
@@ -100,11 +100,11 @@ def metadata(jsonfile, albumid, ext):
 
         found = False
         for a in d["albumes"]:
-            if a["id"] == albumid:
+            if a["id"] == thealbum or a["name"] == thealbum:
                 found = True
                 set_metadata_album(jsonfile, a, ext)
         if found == False:
-            print("The Album ID {} does not exist!".format(albumid))
+            print("The Album {} does not exist!".format(thealbum))
 
 
 def set_metadata_album(path, album, ext):
@@ -185,7 +185,7 @@ if __name__ == "__main__":
     parser.add_argument("--idx", help="Start number to rename. Default: 0001", metavar="START")
     parser.add_argument("--pfx", help="Prefix to rename. Default: none", metavar="PREFIX")
 
-    parser.add_argument("-m", help="Set metada, Album ID, from info file", metavar=("JSON FILE", "ALBUM ID"), nargs=2)   
+    parser.add_argument("-m", help="Set metada, Album, from info file", metavar=("JSON FILE", "ALBUM ID or ALBUM NAME"), nargs=2)   
     parser.add_argument("-d", help="Delete all metada", metavar=("PATH"))
     
     parser.add_argument("--ext", help="Extension of the files to be processed. Default: jpg", metavar="EXTENSION")
