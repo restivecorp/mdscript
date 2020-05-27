@@ -22,7 +22,7 @@ start = 0
 SET_MD_EXIFTOOL_CMD = """exiftool -overwrite_original \\
         -title=\"{}\" -description=\"{}\" \\
         -AllDates=\"{}\" -FileModifyDate=\"{} {}\" \\
-        -keywords=\"{}\" \\
+        -keywords=\"{}\" -sep ";" \\
         -GPSLatitude=\"{}\" -GPSLatitudeRef=\"{}\" -GPSLongitude=\"{}\" -GPSLongitudeRef=\"{}\" \\
         {}*.{}"""
 
