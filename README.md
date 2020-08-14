@@ -1,6 +1,14 @@
 # mdscript
 Metadata Script
 
+![](https://img.shields.io/github/license/restivecorp/mdscript)
+![](https://img.shields.io/github/issues/restivecorp/mdscript)
+![](https://img.shields.io/github/issues-closed/restivecorp/mdscript)
+![](https://img.shields.io/badge/Python-3-blue)
+![](https://img.shields.io/github/stars/restivecorp/mdscript)
+![](https://img.shields.io/github/last-commit/restivecorp/mdscript)
+
+
 ## Description
 Description
 
@@ -45,13 +53,13 @@ Set metadata:
 
 ```
     # Set metadata jpg files by album ID
-    $ python3 mds.py -r /potos/albumes/2000/2000.json 26c44f1489c2ee3ad97a38cadc8de5a1 
+    $ python3 mds.py -m /potos/albumes/2000/2000.json 26c44f1489c2ee3ad97a38cadc8de5a1 
 
     # Set metadata jpg files by album NAME
-    $ python3 mds.py -r /potos/albumes/2000/2000.json 2000.01.01-newyear
+    $ python3 mds.py -m /potos/albumes/2000/2000.json 2000.01.01-newyear
 
     # Set metadata avi files
-    $ python3 mds.py -r /potos/albumes/2000/2000.json 26c44f1489c2ee3ad97a38cadc8de5a1 --ext avi
+    $ python3 mds.py -m /potos/albumes/2000/2000.json 26c44f1489c2ee3ad97a38cadc8de5a1 --ext avi
 ```
 
 ### Delete
