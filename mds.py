@@ -45,6 +45,7 @@ def rename(path, ext, idx, pfx):
     else:
         ext = ext.replace("*","")
         ext = ext.replace(".","")
+        ext = ext.lower()
 
     if idx is None:
         idx = start
