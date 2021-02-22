@@ -119,7 +119,6 @@ def set_metadata_album(path, album, ext):
         print("    PHOTOS: " + album["photos"])
         print("    VIDEOS: " + album["videos"])
 
-    
     keys = album["keys"]["what"] + ";" + album["keys"]["who"] + ";" + album["keys"]["where"] + ";" + album["keys"]["owner"]
     cmd = SET_MD_EXIFTOOL_CMD.format(
         album["title"], album["description"], 
