@@ -53,7 +53,7 @@ def rename(path, ext, idx, pfx):
         try:
             idx = int(idx)
         except:
-            print("idx must be a numbrer!")
+            print("idx must be a number!")
             sys.exit()
 
     if pfx is None:
